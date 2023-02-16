@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useLocation, useOutletContext, useParams } from 'react-router-dom'
 import { getAuthor } from '../../services/author';
 import { getNew } from '../../services/news';
 
@@ -7,6 +7,9 @@ const NewDescription = () => {
 
   //Get param URL
   const { newId } = useParams();
+
+  const location = useLocation()
+  const [date, setDate] = useOutletContext();
 
   const [newData, setNewData] = useState({});
   const [author, setAuthor] = useState({})
@@ -20,6 +23,8 @@ const NewDescription = () => {
 
   useEffect(() => {
     getData();
+    console.log(location.state);
+    setDate('2023/01/10')
   }, [])
 
 
