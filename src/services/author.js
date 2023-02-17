@@ -10,3 +10,13 @@ export const getAuthor = async (id) => {
         return {}
     }
 }
+
+export const getAuthorLogin = async (user, password) => {
+    try {
+        const { data } = await axios.get(`${endpoints.authors}?user=${user}&password=${password}`)
+        return data
+    } catch (error) {
+        console.log(error);
+        return {}
+    }
+}

@@ -1,10 +1,21 @@
 import React, { useEffect, useState } from 'react'
-import { Outlet, useSearchParams } from 'react-router-dom'
+import { Outlet, useNavigate, useSearchParams } from 'react-router-dom'
+import { doLogout, getUser } from '../../services/login';
 import NavBar from '../navBar/NavBar'
 
 const Home = () => {
 
-    const [date, setDate] = useState('2023/02/16');
+    const [user, setUser] = useState(false);
+    const navigate = useNavigate('/')
+
+    const handleLogout = () => {
+        if (user) {
+            doLogout();
+            navigate('/')
+        }else {
+            navigate('/login');
+        }
+    }
 
     // const [searchParams, setSearchParams] = useSearchParams();
 
@@ -15,18 +26,21 @@ const Home = () => {
     //     idUser: 50
     //   })
     // }, [])
-    
+
     // console.log(idUser)
 
     useEffect(() => {
-      console.log(date)
-    }, [date])
-    
+        const userData = getUser();
+        if (userData) {
+            setUser(userData)
+        }
+    }, [])
+
 
     return (
         <>
-            <NavBar />
-            <Outlet context={[date, setDate]} />
+            <NavBar user={user} handleLogout={handleLogout} />
+            <Outlet context={[user, handleLogout]} />
         </>
     )
 }
