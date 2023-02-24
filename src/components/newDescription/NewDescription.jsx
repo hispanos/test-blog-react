@@ -9,7 +9,7 @@ const NewDescription = () => {
   const { newId } = useParams();
 
   const location = useLocation()
-  const [date, setDate] = useOutletContext();
+  const [user, logout] = useOutletContext();
 
   const [newData, setNewData] = useState({});
   const [author, setAuthor] = useState({})
@@ -23,8 +23,8 @@ const NewDescription = () => {
 
   useEffect(() => {
     getData();
-    console.log(location.state);
-    setDate('2023/01/10')
+    console.log('user',user);
+    console.log('logout',logout);
   }, [])
 
 

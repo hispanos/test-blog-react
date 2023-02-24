@@ -1,18 +1,22 @@
-import React, { useEffect, useState } from 'react'
+import React, { createContext, useEffect, useState } from 'react'
 import { Outlet, useNavigate, useSearchParams } from 'react-router-dom'
 import { doLogout, getUser } from '../../services/login';
-import NavBar from '../navBar/NavBar'
+import Footer from '../footer/Footer';
+import NavBar from '../navBar/NavBar';
+
+export const AppContext = createContext({});
 
 const Home = () => {
 
     const [user, setUser] = useState(false);
     const navigate = useNavigate('/')
+    const [doClick, setDoClick] = useState(false);
 
     const handleLogout = () => {
         if (user) {
             doLogout();
             navigate('/')
-        }else {
+        } else {
             navigate('/login');
         }
     }
@@ -34,14 +38,22 @@ const Home = () => {
         if (userData) {
             setUser(userData)
         }
-    }, [])
+    }, []);
 
 
     return (
-        <>
-            <NavBar user={user} handleLogout={handleLogout} />
+        <AppContext.Provider value={
+            {
+                user,
+                handleLogout,
+                doClick,
+                setDoClick
+            }
+        }>
+            <NavBar />
             <Outlet context={[user, handleLogout]} />
-        </>
+            <Footer/>
+        </AppContext.Provider>
     )
 }
 

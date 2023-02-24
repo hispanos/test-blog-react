@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { NavLink } from 'react-router-dom'
+import { AppContext } from '../home/Home';
 
-const NavBar = ({user, handleLogout}) => {
+const NavBar = () => {
+
+    const { user, handleLogout, doClick, } = useContext(AppContext);
+
     return (
-        <nav className="navbar bg-primary navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+        <nav className={`navbar ${doClick ? 'bg-primary' : 'bg-secondary'} navbar-expand-lg bg-body-tertiary`} data-bs-theme="dark">
             <div className="container-fluid">
                 <NavLink to='/' className='navbar-brand text-white'>Inicio</NavLink>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
